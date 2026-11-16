@@ -1,0 +1,15 @@
+{
+  "name": "gopi-site",
+  "private": true,
+  "scripts": {
+    "build:card": "node tools/build-card.mjs",
+    "test:card": "node tests/card.test.cjs"
+  },
+  "devDependencies": {
+    "html2canvas": "1.4.1",
+    "jsqr": "^1.4.0",
+    "playwright": "*",
+    "pngjs": "^7.0.0",
+    "qrcode-generator": "1.4.4"
+  }
+}

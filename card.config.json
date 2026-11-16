@@ -1,0 +1,17 @@
+{
+  "name": "Coach Gopi",
+  "shortName": "Gopi",
+  "tagline": "Running coach · Ahmedabad & Online",
+  "photo": "assets/card-photo.jpg",
+  "offer": "Structured running coaching for every runner, at the Riverfront or online.",
+  "credential": "UESCA certified",
+  "brand": {
+    "cssSource": "index.html"
+  },
+  "messages": {
+    "practitioner": "Hi, I am Coach Gopi, a UESCA certified running coach in Ahmedabad. I coach runners at the Riverfront and online, from a first 10K to a marathon or ultra. Here is my card:",
+    "client": "Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad who coaches runners at the Riverfront and online. Have a look:",
+    "business": "Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad, coaching runners at the Riverfront and online. Pass it on to anyone who wants to start running or train for a race:"
+  },
+  "recommended": null
+}
