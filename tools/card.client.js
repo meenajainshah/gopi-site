@@ -5,8 +5,8 @@
   var card = $('card'), frame = $('frame'), msg = $('msg'), sender = $('sender'), statusEl = $('status');
   var who = 'practitioner', dirty = false;
 
-  // The link is this page's own folder, so it works on any domain. Nothing is hard-coded.
-  var folder = new URL('./', window.location.href).href;
+  // The link is the site's live address from the config (siteUrl). Without one it falls back to this page's own folder.
+  var folder = DATA.siteUrl || new URL('./', window.location.href).href;
 
   function slugify(s) {
     return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()

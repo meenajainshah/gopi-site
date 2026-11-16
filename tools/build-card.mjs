@@ -21,6 +21,13 @@ for (const k of ['practitioner', 'client', 'business']) {
   if (!cfg.messages || !cfg.messages[k]) fail(`config.messages.${k} is required`);
 }
 
+// ---- siteUrl: optional fixed address for the card link. Without it the card uses the page's own folder.
+let siteUrl = '';
+if (cfg.siteUrl) {
+  try { const u = new URL(cfg.siteUrl); if (u.protocol !== 'https:' && u.protocol !== 'http:') throw 0; siteUrl = u.origin + u.pathname.replace(/\/?$/, '/'); }
+  catch { fail('config.siteUrl must be a full http(s) URL, for example https://www.example.com/'); }
+}
+
 // ---- brand tokens: the site's own CSS variables, with optional overrides in config.brand
 const brand = {};
 const cssSource = cfg.brand && cfg.brand.cssSource;
@@ -72,7 +79,7 @@ if (rec !== null && rec !== undefined) {
 }
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const dataFor = (mode) => ({ mode, name: cfg.name, shortName: cfg.shortName, tagline: cfg.tagline, messages: cfg.messages });
+const dataFor = (mode) => ({ mode, siteUrl, name: cfg.name, shortName: cfg.shortName, tagline: cfg.tagline, messages: cfg.messages });
 const dataJsonFor = (mode) => JSON.stringify(dataFor(mode)).replace(/</g, '\\u003c').replace(/[\u2028\u2029]/g, '');
 
 const tpl = readFileSync(new URL('./card.template.html', import.meta.url), 'utf8');
