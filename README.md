@@ -1,13 +1,14 @@
 # gopi-site
 
-## Share card (`/card.html`)
+## Share cards
 
-A static, noindex page where Coach Gopi, a client or a local business makes an intro card and a ready message to send on WhatsApp or anywhere. It is not linked from the main menu.
+Two static, noindex pages, not linked from the main menu. Both are generated from `card.config.json` (name, short name, tagline, photo, offer, credential, three messages, `recommended`). Colours, fonts and corner style come from the `:root` CSS variables in `index.html`.
 
-It is generated from `card.config.json` (name, short name, tagline, photo, offer, credential, three messages, `recommended`). Colours, fonts and corner style come from the `:root` CSS variables in `index.html`.
+- `/card.html` is **Gopi's intro card**. No questions and no name: it shows his card and his own message, ready to send on WhatsApp or anywhere.
+- `/refer.html` is the **refer card**. Gopi sends its link to clients and local businesses. They pick "I am a client" or "I am a local business", add their name (optional), and get a card that says "Referred by <name>" with a message to send on.
 
 ```
-node tools/build-card.mjs                      # writes card.html
+node tools/build-card.mjs                      # writes card.html and refer.html
 npm install && npm run test:card               # builds variants and runs the browser tests
 ```
 
