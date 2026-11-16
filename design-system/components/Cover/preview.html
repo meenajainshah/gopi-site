@@ -1,0 +1,24 @@
+<!-- @dsCard height=288 -->
+<!doctype html><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&family=Barlow:wght@400&display=swap">
+<style>html,body{margin:0;background:var(--bg)}svg{display:block;width:960px;height:288px}
+.ground{fill:var(--bg)}.b-ink{fill:var(--ink)}.b-acc{fill:var(--accent)}.b-riv{fill:var(--river)}.b-mut{fill:var(--muted)}.chev{fill:var(--bg)}
+.name{font:800 100px/0.95 var(--font-display,'Barlow Condensed','Arial Narrow',Impact,sans-serif);text-transform:uppercase;color:var(--ink);margin:0}
+.tag{font:400 14px/1.4 var(--font-body,Barlow,system-ui,sans-serif);color:var(--muted);margin:10px 0 0}
+.t{position:absolute;left:32px;bottom:28px;width:420px}.w{position:relative;width:960px;height:288px}</style>
+<div class="w">
+<!-- Blocks: ink 192x192 at x560, accent 128x128 at x752, river 96x144 at x480, muted 64x64 at x880 (ink, accent, river, muted at full value).
+     Arrangement: a staggered stack, tall ink slab with satellites, bleeding off the right edge.
+     Pattern: chevrons at a 32px pitch cut from the ink and accent blocks in the ground colour; forward motion is what a runner and a pacer sell.
+     Steps and radii: spacing 32/48/64, radius 10px (radius-lg) on every block; chevron strokes square. -->
+<svg viewBox="0 0 960 288" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Coach Gopi colour blocks">
+<rect class="ground" width="960" height="288"/>
+<rect class="b-riv" x="480" y="96" width="96" height="144" rx="10"/>
+<rect class="b-ink" x="560" y="32" width="192" height="192" rx="10"/>
+<rect class="b-acc" x="752" y="96" width="128" height="128" rx="10"/>
+<rect class="b-mut" x="880" y="32" width="64" height="64" rx="10"/>
+<g class="chev"><polygon points="592,96 624,128 592,160 592,144 608,128 592,112"/><polygon points="624,96 656,128 624,160 624,144 640,128 624,112"/><polygon points="656,96 688,128 656,160 656,144 672,128 656,112"/>
+<polygon points="784,128 816,160 784,192 784,176 800,160 784,144"/><polygon points="816,128 848,160 816,192 816,176 832,160 816,144"/></g>
+</svg>
+<div class="t"><p class="name">Coach<br>Gopi</p><p class="tag">Running coaching in Ahmedabad and online.</p></div>
+</div>
