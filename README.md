@@ -16,3 +16,7 @@ npm install && npm run test:card               # builds variants and runs the br
 - The build fails if the site colours do not meet WCAG AA contrast.
 - The link is the live site address from `siteUrl` in the config (now https://www.coach-gopi.com/) plus `?ref=<slug>` on the refer card. Without `siteUrl` it falls back to the page's own folder. The sender's name is never stored.
 - Libraries load from cdnjs: qrcode-generator 1.4.4 and html2canvas 1.4.1. If they fail, copy and WhatsApp still work.
+
+## Link preview
+
+When the site link is shared as text (for example on WhatsApp), apps show a preview card from the Open Graph tags in `index.html`, using `assets/og-card.jpg`. Regenerate the image after changing the name, photo or offer: `node tools/build-og-image.cjs`. Apps cache previews, so a changed image can take a while to appear. The preview is the same for every `?ref=` link.

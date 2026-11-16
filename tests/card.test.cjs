@@ -115,7 +115,14 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   check((await p.inputValue('#msg')) === 'My own words', 'edited message is kept when switching sender');
   await p.close();
 
-  // --- intro card (Gopi's own): no question, no name field
+  // --- link preview: the main site carries Open Graph tags so a shared link shows a card
+  const idx = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const ogImg = (idx.match(/property="og:image" content="([^"]+)"/) || [])[1] || '';
+  check(ogImg === 'https://www.coach-gopi.com/assets/og-card.jpg' && fs.existsSync(path.join(root, 'assets/og-card.jpg')), 'index.html has an og:image that points at a file in the repo', ogImg);
+  check(fs.statSync(path.join(root, 'assets/og-card.jpg')).size < 300 * 1024, 'preview image is under 300 KB');
+  check(/og:title/.test(idx) && /og:description/.test(idx) && /summary_large_image/.test(idx), 'index.html has og:title, og:description and a large-image card');
+
+  // --- intro card (Gopi's own: no question, no name field
   p = await open(browser, introUrl);
   check((await p.locator('input[name=who]').count()) === 0, 'intro card has no "who is sending" question');
   check(await p.isHidden('#name-field'), 'intro card has no name field');
