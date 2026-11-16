@@ -7,7 +7,9 @@ import { dirname, resolve, extname } from 'node:path';
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf('--' + k); return i >= 0 ? args[i + 1] : d; };
 const configPath = resolve(opt('config', 'card.config.json'));
-const outPath = resolve(opt('out', 'card.html'));
+const modeArg = opt('mode', '');
+const MODES = { intro: 'card.html', refer: 'refer.html' };
+if (modeArg && !MODES[modeArg]) { console.error('build-card: --mode must be intro or refer'); process.exit(1); }
 const base = dirname(configPath);
 const cfg = JSON.parse(readFileSync(configPath, 'utf8'));
 
@@ -70,20 +72,28 @@ if (rec !== null && rec !== undefined) {
 }
 
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const data = { name: cfg.name, shortName: cfg.shortName, tagline: cfg.tagline, messages: cfg.messages };
-const dataJson = JSON.stringify(data).replace(/</g, '\\u003c').replace(/[\u2028\u2029]/g, '');
+const dataFor = (mode) => ({ mode, name: cfg.name, shortName: cfg.shortName, tagline: cfg.tagline, messages: cfg.messages });
+const dataJsonFor = (mode) => JSON.stringify(dataFor(mode)).replace(/</g, '\\u003c').replace(/[\u2028\u2029]/g, '');
 
 const tpl = readFileSync(new URL('./card.template.html', import.meta.url), 'utf8');
+const buildOne = (mode, outPath) => {
 const vars = {
-  TITLE: esc(`Share card | ${cfg.name}`),
+  TITLE: esc(mode === 'intro' ? `Intro card | ${cfg.name}` : `Refer ${cfg.name}`),
+  HEADING: esc(mode === 'intro' ? `Share ${cfg.name}` : `Recommend ${cfg.name}`),
+  LEAD: mode === 'intro' ? 'Your intro card and a ready message. Send it on WhatsApp or anywhere.' : esc(`Know someone who wants to run? Make a card with your name on it and send it to them.`),
+  WHO: mode === 'intro' ? '' : '<fieldset>\n    <legend>Who is recommending?</legend>\n    <div class="who" style="grid-template-columns:repeat(2,1fr)">\n      <label><input type="radio" name="who" value="client" checked><span>I am a client</span></label>\n      <label><input type="radio" name="who" value="business"><span>I am a local business</span></label>\n    </div>\n  </fieldset>',
+  NAME_HIDDEN: mode === 'intro' ? ' hidden' : '',
   FONTS: fontsHref ? `<link rel="stylesheet" href="${esc(fontsHref)}">` : '',
   TOKENS: Object.entries(brand).map(([k, v]) => `--${k}:${v};`).join('') ,
   NAME: esc(cfg.name), TAGLINE: esc(cfg.tagline), CREDENTIAL: esc(cfg.credential), OFFER: esc(cfg.offer),
   PHOTO: photoUri, PHOTO_ALT: esc(`${cfg.name}`),
   BADGE: badge ? `<p class="badge" id="badge">${esc(badge)}</p>` : '',
-  DATA: dataJson,
+  DATA: dataJsonFor(mode),
   SCRIPT: readFileSync(new URL('./card.client.js', import.meta.url), 'utf8'),
 };
 const out = tpl.replace(/\{\{(\w+)\}\}/g, (_, k) => { if (!(k in vars)) fail(`template var ${k} unknown`); return vars[k]; });
 writeFileSync(outPath, out);
 console.log(`build-card: wrote ${outPath} (${(out.length / 1024).toFixed(1)} KB)${badge ? ', badge: ' + badge : ', no badge'}`);
+};
+if (modeArg) buildOne(modeArg, resolve(opt('out', MODES[modeArg])));
+else for (const m of Object.keys(MODES)) buildOne(m, resolve(opt('outdir', '.'), MODES[m]));

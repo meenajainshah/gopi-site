@@ -69,20 +69,13 @@ input[type=text]:focus-visible,textarea:focus-visible{outline:3px solid var(--ri
 <body>
 <div class="page">
   <header>
-    <h1>Share {{NAME}}</h1>
-    <p class="lead">Make an intro card and a ready message in a few taps. Send it on WhatsApp or anywhere.</p>
+    <h1>{{HEADING}}</h1>
+    <p class="lead">{{LEAD}}</p>
   </header>
 
-  <fieldset>
-    <legend>Who is sending this?</legend>
-    <div class="who">
-      <label><input type="radio" name="who" value="practitioner" checked><span>{{NAME}}</span></label>
-      <label><input type="radio" name="who" value="client"><span>A client</span></label>
-      <label><input type="radio" name="who" value="business"><span>A local business</span></label>
-    </div>
-  </fieldset>
+  {{WHO}}
 
-  <div class="field" id="name-field" hidden>
+  <div class="field" id="name-field"{{NAME_HIDDEN}}>
     <label for="sender" id="sender-label">Your name</label>
     <input type="text" id="sender" maxlength="40" autocomplete="off" autocapitalize="words" spellcheck="false">
     <p class="hint">Shown on the card and added to the link. It is not saved anywhere else. Leave it empty for a plain link.</p>

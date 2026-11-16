@@ -117,6 +117,6 @@
   }
 
   // Scripts with "defer" have run (or failed) by DOMContentLoaded, so the QR and picture tools are known by now.
-  function start() { msg.value = DATA.messages.practitioner; render(); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); }
+  function start() { setWho(DATA.mode === 'intro' ? 'practitioner' : 'client'); if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

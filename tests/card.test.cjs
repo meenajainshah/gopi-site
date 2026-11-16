@@ -9,7 +9,7 @@ const QR_JS = nm('qrcode-generator/qrcode.js');
 const H2C_JS = fs.readFileSync(path.join(path.dirname(require.resolve('html2canvas/package.json', { paths: [root] })), 'dist/html2canvas.min.js'), 'utf8');
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'card-test-'));
-function build(over, name) {
+function build(over, name, mode = 'refer') {
   const cfg = JSON.parse(fs.readFileSync(path.join(root, 'card.config.json'), 'utf8'));
   Object.assign(cfg, over);
   cfg.photo = path.resolve(root, cfg.photo);
@@ -17,7 +17,7 @@ function build(over, name) {
   if (over.photo) cfg.photo = over.photo;
   const cfgPath = path.join(tmp, name + '.json'), out = path.join(tmp, name + '.html');
   fs.writeFileSync(cfgPath, JSON.stringify(cfg));
-  execFileSync('node', [path.join(root, 'tools/build-card.mjs'), '--config', cfgPath, '--out', out], { stdio: 'pipe' });
+  execFileSync('node', [path.join(root, 'tools/build-card.mjs'), '--config', cfgPath, '--mode', mode, '--out', out], { stdio: 'pipe' });
   return 'file://' + out;
 }
 
@@ -52,6 +52,7 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
 (async () => {
   const browser = await chromium.launch();
   const url = build({}, 'base');
+  const introUrl = build({}, 'intro', 'intro');
 
   // --- client mode
   let p = await open(browser, url);
@@ -113,15 +114,24 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   check((await p.inputValue('#msg')) === 'My own words', 'edited message is kept when switching sender');
   await p.close();
 
-  // --- practitioner
-  p = await open(browser, url);
-  check(await p.isHidden('#name-field'), 'practitioner mode has no name field');
+  // --- intro card (Gopi's own): no question, no name field
+  p = await open(browser, introUrl);
+  check((await p.locator('input[name=who]').count()) === 0, 'intro card has no "who is sending" question');
+  check(await p.isHidden('#name-field'), 'intro card has no name field');
   const lp = await linkOf(p);
-  check(!lp.includes('ref=') && (await p.textContent('#card-tag')) === 'Running coach · Ahmedabad & Online', 'practitioner link has no ref, tag is the tagline', lp);
+  check(!lp.includes('ref=') && (await p.textContent('#card-tag')) === 'Running coach · Ahmedabad & Online', 'intro link has no ref, tag is the tagline', lp);
+  check((await p.inputValue('#msg')).startsWith('Hi, I am Coach Gopi'), 'intro message is from Gopi');
   check(!lp.includes('onrender') && !lp.includes('gopi-site'), 'link is built from the page location, domain is not hard-coded');
   check(await p.evaluate(() => !document.documentElement.innerHTML.includes('onrender.com')), 'no hard-coded domain in the page');
   check(await p.evaluate(() => document.querySelector('meta[name=robots]').content.includes('noindex')), 'page is noindex');
   check((await p.locator('#badge').count()) === 0, 'recommended = null: no badge');
+  check(p.errors.length === 0, 'intro page has no script errors', p.errors.join(';'));
+  await p.close();
+  // --- refer card: client / business only
+  p = await open(browser, url);
+  check((await p.locator('input[name=who]').count()) === 2 && (await p.locator('input[value=practitioner]').count()) === 0, 'refer card offers client and business only');
+  check(await p.isVisible('#name-field'), 'refer card shows the name field');
+  check((await p.inputValue('#msg')).includes('sharing Coach Gopi'), 'refer message starts as the client message');
   await p.close();
 
   // --- badge
