@@ -20,3 +20,16 @@ npm install && npm run test:card               # builds variants and runs the br
 ## Link preview
 
 When the site link is shared as text (for example on WhatsApp), apps show a preview card from the Open Graph tags in `index.html`, using `assets/og-card.jpg`. Regenerate the image after changing the name, photo or offer: `node tools/build-og-image.cjs`. Apps cache previews, so a changed image can take a while to appear. The preview is the same for every `?ref=` link.
+
+## Pages
+
+The site has seven pages built from the content in `tools/build-site.mjs`: Home, Running Coach, Nutrition & Diet, Corporate Wellness, Events & Race Management, About Coach Gopi and Contact. Each has its own title, description, canonical URL, share preview tags and structured data. Styles are in `assets/site.css` and the enquiry forms in `assets/site.js`.
+
+```
+node tools/build-site.mjs          # rebuilds every page, sitemap.xml and robots.txt
+npm run test:site                  # checks titles, links, mobile layout and the enquiry forms
+```
+
+- Enquiry forms (Contact, Corporate Wellness, Events) email Gopi through FormSubmit, with a WhatsApp fallback if the email fails.
+- Buttons and forms push simple events (for example `free_plan_download`, `running_coaching_enquiry`, `whatsapp_click`) to `window.dataLayer` and `gtag` if either exists. No analytics script is installed yet.
+- Not published, because the content document asks for confirmation first: the Radiscan attendance and productivity figures.
