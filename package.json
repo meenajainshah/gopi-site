@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "build:card": "node tools/build-card.mjs",
-    "test:card": "node tests/card.test.cjs"
+    "build:site": "node tools/build-site.mjs",
+    "test:card": "node tests/card.test.cjs",
+    "test:site": "node tests/site.test.cjs"
   },
   "devDependencies": {
     "html2canvas": "1.4.1",

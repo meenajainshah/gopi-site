@@ -167,14 +167,14 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   const alt = path.join(tmp, 'alt.jpg');
   fs.writeFileSync(alt, Buffer.from(fs.readFileSync(path.join(root, 'assets/card-photo.jpg')).map((b, i) => (i > 700 ? 255 - b : b))));
   const cUrl = build({ name: 'Dr. Asha Rao', shortName: 'Asha', tagline: 'Physiotherapist · Pune', photo: alt, credential: 'MPT certified',
-    brand: { cssSource: path.join(root, 'index.html'), tokens: { accent: '#1B5E20', 'accent-ink': '#FFFFFF', ink: '#10201A', river: '#004D40', 'river-tint': '#E0F2F1' } } }, 'alt');
+    brand: { cssSource: path.join(root, 'assets/site.css'), fontsHref: JSON.parse(fs.readFileSync(path.join(root, 'card.config.json'), 'utf8')).brand.fontsHref, tokens: { accent: '#1B5E20', 'accent-ink': '#FFFFFF', ink: '#10201A', river: '#004D40', 'river-tint': '#E0F2F1' } } }, 'alt');
   p = await open(browser, cUrl);
   check((await p.textContent('.card-name')) === 'Dr. Asha Rao' && (await p.textContent('.chip')) === 'MPT certified', 'name and credential follow the config');
   check(await p.evaluate(() => getComputedStyle(document.querySelector('.wa')).backgroundColor) === 'rgb(27, 94, 32)', 'accent colour follows the config');
   const ph0 = await (async () => { const q = await open(browser, url); const v = await q.evaluate(() => getComputedStyle(document.querySelector('.photo')).backgroundImage); await q.close(); return v; })();
   check((await p.evaluate(() => getComputedStyle(document.querySelector('.photo')).backgroundImage)) !== ph0, 'photo follows the config');
   await p.close();
-  let lowContrast = false; try { build({ brand: { cssSource: path.join(root, 'index.html'), tokens: { accent: '#FFEE99' } } }, 'lowc'); } catch (e) { lowContrast = /contrast/.test(String(e.stderr)); }
+  let lowContrast = false; try { build({ brand: { cssSource: path.join(root, 'assets/site.css'), fontsHref: JSON.parse(fs.readFileSync(path.join(root, 'card.config.json'), 'utf8')).brand.fontsHref, tokens: { accent: '#FFEE99' } } }, 'lowc'); } catch (e) { lowContrast = /contrast/.test(String(e.stderr)); }
   check(lowContrast, 'build refuses colours that fail AA contrast');
 
   // --- 375px phone, no horizontal scroll, card fits
