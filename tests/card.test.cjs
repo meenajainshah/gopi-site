@@ -109,7 +109,7 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   check(!(await linkOf(p)).includes('ref='), 'name with no usable characters gives a plain link');
   await p.check('input[value=business]');
   check(await p.textContent('#sender-label') === 'Your business name', 'business mode asks for business name');
-  check((await p.inputValue('#msg')).includes('Pass it on'), 'business message is pre-filled');
+  check((await p.inputValue('#msg')).startsWith('Hi, we are recommending Coach Gopi') && (await p.inputValue('#msg')).includes('Pass it on'), 'business message is a recommendation and is pre-filled');
   await p.fill('#msg', 'My own words');
   await p.check('input[value=client]');
   check((await p.inputValue('#msg')) === 'My own words', 'edited message is kept when switching sender');
@@ -132,7 +132,7 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   p = await open(browser, url);
   check((await p.locator('input[name=who]').count()) === 2 && (await p.locator('input[value=practitioner]').count()) === 0, 'refer card offers client and business only');
   check(await p.isVisible('#name-field'), 'refer card shows the name field');
-  check((await p.inputValue('#msg')).includes('sharing Coach Gopi'), 'refer message starts as the client message');
+  check((await p.inputValue('#msg')).startsWith('Hi, I am recommending Coach Gopi'), 'refer message starts as a client recommendation');
   await p.close();
 
   // --- no siteUrl: falls back to the page's own folder
