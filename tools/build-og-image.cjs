@@ -7,7 +7,7 @@ const cfg = JSON.parse(fs.readFileSync(path.join(root, 'card.config.json'), 'utf
 const site = fs.readFileSync(path.join(root, cfg.brand.cssSource), 'utf8');
 const t = {};
 for (const m of site.match(/:root\s*\{([^}]*)\}/)[1].matchAll(/--([\w-]+)\s*:\s*([^;]+);/g)) t[m[1]] = m[2].trim();
-const fonts = (site.match(/<link[^>]+href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/) || [])[1] || '';
+const fonts = cfg.brand.fontsHref || (site.match(/<link[^>]+href="(https:\/\/fonts\.googleapis\.com\/css2[^"]+)"/) || [])[1] || '';
 const photo = 'data:image/jpeg;base64,' + fs.readFileSync(path.join(root, cfg.photo)).toString('base64');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const host = new URL(cfg.siteUrl).host;
