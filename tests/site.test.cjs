@@ -46,6 +46,8 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         m.links.forEach((l) => toCheck.add(l));
       } else {
         check(m.sw <= m.cw, `${url} has no horizontal scroll at 375px`, `${m.sw} vs ${m.cw}`);
+        const nav = await p.evaluate(() => [...document.querySelectorAll('.top nav a')].map((a) => { const r = a.getBoundingClientRect(); return r.left >= 0 && r.right <= document.documentElement.clientWidth && r.height >= 36; }));
+        check(nav.length === 7 && nav.every(Boolean), `${url} shows all 7 menu items on screen at 375px`, JSON.stringify(nav));
         if (url === '/' || url === '/running-coach-ahmedabad/') await p.screenshot({ path: path.join('/tmp', `shot-${url.replace(/\W/g, '') || 'home'}.png`), fullPage: true });
       }
       check(errs.length === 0, `${url} @${width} loads without errors`, errs.join(' | '));
