@@ -61,6 +61,7 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   check((await p.textContent('#card-tag')) === 'Referred by Priya Shah', 'client tag reads "Referred by Priya Shah"');
   const link = await p.evaluate(() => document.getElementById('card-link').textContent);
   check(link.endsWith('?ref=priya-shah'), 'link ends ?ref=priya-shah', link);
+  check(link === 'www.coach-gopi.com/?ref=priya-shah', 'refer link uses the live domain, not the address the page is opened on', link);
   const qrPng = await p.locator('#qr').screenshot();
   const decoded = decode(qrPng);
   check(decoded && decoded.replace(/^https?:\/\//, '') === link, 'QR on the page decodes to the same link', decoded + ' vs ' + link);
@@ -121,8 +122,8 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   const lp = await linkOf(p);
   check(!lp.includes('ref=') && (await p.textContent('#card-tag')) === 'Running coach · Ahmedabad & Online', 'intro link has no ref, tag is the tagline', lp);
   check((await p.inputValue('#msg')).startsWith('Hi, I am Coach Gopi'), 'intro message is from Gopi');
-  check(!lp.includes('onrender') && !lp.includes('gopi-site'), 'link is built from the page location, domain is not hard-coded');
-  check(await p.evaluate(() => !document.documentElement.innerHTML.includes('onrender.com')), 'no hard-coded domain in the page');
+  check(lp === 'www.coach-gopi.com/', 'intro link is the live site address from the config', lp);
+  check(await p.evaluate(() => !document.documentElement.innerHTML.includes('onrender.com')), 'no Render address in the page');
   check(await p.evaluate(() => document.querySelector('meta[name=robots]').content.includes('noindex')), 'page is noindex');
   check((await p.locator('#badge').count()) === 0, 'recommended = null: no badge');
   check(p.errors.length === 0, 'intro page has no script errors', p.errors.join(';'));
@@ -133,6 +134,15 @@ const linkOf = (p) => p.evaluate(() => document.getElementById('card-link').text
   check(await p.isVisible('#name-field'), 'refer card shows the name field');
   check((await p.inputValue('#msg')).includes('sharing Coach Gopi'), 'refer message starts as the client message');
   await p.close();
+
+  // --- no siteUrl: falls back to the page's own folder
+  const nUrl = build({ siteUrl: '' }, 'nosite', 'intro');
+  p = await open(browser, nUrl);
+  const fl = await linkOf(p);
+  check(fl.startsWith('file:///') && !fl.includes('coach-gopi'), 'without siteUrl the link follows the page folder', fl);
+  await p.close();
+  let badUrl = false; try { build({ siteUrl: 'coach-gopi.com' }, 'badurl'); } catch (e) { badUrl = /siteUrl/.test(String(e.stderr)); }
+  check(badUrl, 'build rejects a siteUrl that is not a full URL');
 
   // --- badge
   const bUrl = build({ recommended: { clients: 3, businesses: 1 } }, 'badge');

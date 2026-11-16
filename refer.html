@@ -128,7 +128,7 @@ input[type=text]:focus-visible,textarea:focus-visible{outline:3px solid var(--ri
 
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script type="application/json" id="card-data">{"mode":"refer","name":"Coach Gopi","shortName":"Gopi","tagline":"Running coach · Ahmedabad & Online","messages":{"practitioner":"Hi, I am Coach Gopi, a UESCA certified running coach in Ahmedabad. I coach runners at the Riverfront and online, from a first 10K to a marathon or ultra. Here is my card:","client":"Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad who coaches runners at the Riverfront and online. Have a look:","business":"Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad, coaching runners at the Riverfront and online. Pass it on to anyone who wants to start running or train for a race:"}}</script>
+<script type="application/json" id="card-data">{"mode":"refer","siteUrl":"https://www.coach-gopi.com/","name":"Coach Gopi","shortName":"Gopi","tagline":"Running coach · Ahmedabad & Online","messages":{"practitioner":"Hi, I am Coach Gopi, a UESCA certified running coach in Ahmedabad. I coach runners at the Riverfront and online, from a first 10K to a marathon or ultra. Here is my card:","client":"Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad who coaches runners at the Riverfront and online. Have a look:","business":"Hi, sharing Coach Gopi's card. He is a UESCA certified running coach in Ahmedabad, coaching runners at the Riverfront and online. Pass it on to anyone who wants to start running or train for a race:"}}</script>
 <script>
 (function () {
   'use strict';
@@ -137,8 +137,8 @@ input[type=text]:focus-visible,textarea:focus-visible{outline:3px solid var(--ri
   var card = $('card'), frame = $('frame'), msg = $('msg'), sender = $('sender'), statusEl = $('status');
   var who = 'practitioner', dirty = false;
 
-  // The link is this page's own folder, so it works on any domain. Nothing is hard-coded.
-  var folder = new URL('./', window.location.href).href;
+  // The link is the site's live address from the config (siteUrl). Without one it falls back to this page's own folder.
+  var folder = DATA.siteUrl || new URL('./', window.location.href).href;
 
   function slugify(s) {
     return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
