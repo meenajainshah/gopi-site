@@ -1,4 +1,4 @@
-Build every Coach Gopi page from these tokens. Take colours, fonts and radii from `tokens.json`; never type a hex value or a font name into a page. The live site (`index.html` in the `gopi-site` repository) already defines the same names as CSS variables in its `:root` block, so a new page that copies that block matches the site.
+Build every Coach Gopi page from these tokens. Take colours, fonts and radii from `tokens.json`; never type a hex value or a font name into a page. The live site (`assets/site.css` in the `gopi-site` repository) already defines the same names as CSS variables in its `:root` block, so a new page that copies that block matches the site.
 
 ## Content fundamentals
 
@@ -12,7 +12,7 @@ Build every Coach Gopi page from these tokens. Take colours, fonts and radii fro
 
 - **Colour.** Warm grey-green page (`bg`), white cards (`surface`), near-black teal ink. One action colour: orange `accent`. Teal `river` is for labels and chips. Both themes are defined; dark follows the viewer's setting and an explicit `data-theme`.
 - **Type.** Barlow Condensed (`display` family) in uppercase for headlines and names, Barlow (`body`) for text, IBM Plex Mono (`mono`) for eyebrows, tags, paces and links. Headlines are tight (line height 1). Set uppercase in CSS with `text-transform`; the type styles do not carry it.
-- **Layout.** A race-day sheet: pace bib in the hero, a log table of paces and prices, programme cards as a ladder. Content is at most `wrap-max` wide with a 16px side gutter; sections have `space-72` above and below.
+- **Layout.** A race-day sheet: a big uppercase headline beside the portrait, log tables of paces and prices, and service and programme cards in a grid. The pace bib is kept as a component for pages that show a target time. Content is at most `wrap-max` wide with a 16px side gutter; sections have `space-72` above and below.
 - **Borders, not shadows.** Separate things with `border-hairline` in `line`. Use `border-strong` in `ink` for the bib and share card. No shadows, no gradients.
 - **Radius.** `radius-lg` on cards, `radius-sm` on buttons and fields, `radius-xs` on chips.
 - **Focus.** A 3px solid `river` outline with a 3px offset on every focusable element. Do not remove it.
@@ -27,7 +27,7 @@ Build every Coach Gopi page from these tokens. Take colours, fonts and radii fro
 
 ## Building a new page
 
-1. Start from the `:root` block of `index.html` (or `tokens.json`) so colours, fonts and radii are the site's own.
+1. Start from the `:root` block of `assets/site.css` (or `tokens.json`) so colours, fonts and radii are the site's own.
 2. Compose with the components in this system: `Eyebrow` over a `section-title`, then a `DataTable`, `ProgrammeCard` ladder or `FormatCard` pair, ending in a `FinalCta`.
 3. Keep one primary `Button` per screen. Everything else is ghost.
 4. Check the page at 375px wide: no sideways scroll, and every row stacks to one column.
