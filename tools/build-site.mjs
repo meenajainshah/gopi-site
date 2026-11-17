@@ -116,7 +116,6 @@ const IG_POSTS = [
   'https://www.instagram.com/p/DfXcXtEzzzF/',
   'https://www.instagram.com/p/Dd8wTlEBIx7/',
   'https://www.instagram.com/p/Ddi5IILFfC5/',
-  'https://www.instagram.com/p/DfzGlM2jCCc/',
 ];
 const igEmbed = (urls) => `<div class="ig-grid">${urls.map((u) => `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14"><a href="${u}" target="_blank" rel="noopener">View this post on Instagram</a></blockquote>`).join('')}</div>
       <p class="fee-note">Posts open from <a href="${IG}" target="_blank" rel="noopener">@runningcoach.gopi</a> on Instagram.</p>
