@@ -28,6 +28,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         h1: document.querySelectorAll('h1').length, title: document.title, desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canon: (document.querySelector('link[rel=canonical]') || {}).href || '', og: !!document.querySelector('meta[property="og:image"]'),
         sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
+        credit: (document.querySelector('footer a[href*="iviewlabs"]') || {}).href || '',
         cur: (document.querySelector('nav a[aria-current=page]') || {}).textContent || '',
         ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } }),
         ig: [...document.querySelectorAll('blockquote.instagram-media')].map((b) => b.getAttribute('data-instgrm-permalink')),
@@ -41,6 +42,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         check(m.desc.length > 50 && !descs.has(m.desc), `${url} has a unique meta description`, m.desc); descs.add(m.desc);
         check(m.canon === 'https://www.coach-gopi.com' + url, `${url} canonical is the live domain`, m.canon);
         check(m.og && m.ld.length > 0 && m.ld.every(Boolean), `${url} has og tags and valid JSON-LD`);
+        check(m.credit === 'https://iviewlabs.com/', `${url} footer links to iviewlabs`, m.credit);
         check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
