@@ -44,7 +44,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
-        if (url === '/') check(m.ig.length === 4 && m.ig.every((u) => /^https:\/\/www\.instagram\.com\/p\/[A-Za-z0-9_-]{11}\/$/.test(u)), 'home embeds the four shared Instagram posts with clean links', JSON.stringify(m.ig));
+        if (url === '/') check(m.ig.length === 3 && m.ig.every((u) => /^https:\/\/www\.instagram\.com\/p\/[A-Za-z0-9_-]{11}\/$/.test(u)), 'home embeds the three public Instagram posts with clean links', JSON.stringify(m.ig));
         else check(m.ig.length === 0, `${url} has no Instagram embeds`, m.ig.length);
         m.links.forEach((l) => toCheck.add(l));
       } else {
