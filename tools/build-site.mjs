@@ -113,7 +113,7 @@ const form = (kind, event, inner, button) => `<form class="enq" data-enquiry="${
 
 // Instagram posts shared in Gopi's client profile (Drive). Embedded with Instagram's own embed code; links without tracking parameters.
 const IG_POSTS = [
-  'https://www.instagram.com/p/DfXcXtEzzzF/',
+  'https://www.instagram.com/p/DfzGlM2jCCc/',
   'https://www.instagram.com/p/Dd8wTlEBIx7/',
   'https://www.instagram.com/p/Ddi5IILFfC5/',
 ];
