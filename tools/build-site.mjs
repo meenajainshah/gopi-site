@@ -111,6 +111,16 @@ const form = (kind, event, inner, button) => `<form class="enq" data-enquiry="${
         <p class="form-status" role="status" aria-live="polite"></p>
       </form>`;
 
+// Instagram posts shared in Gopi's client profile (Drive). Embedded with Instagram's own embed code; links without tracking parameters.
+const IG_POSTS = [
+  'https://www.instagram.com/p/DfXcXtEzzzF/',
+  'https://www.instagram.com/p/Dd8wTlEBIx7/',
+  'https://www.instagram.com/p/Ddi5IILFfC5/',
+];
+const igEmbed = (urls) => `<div class="ig-grid">${urls.map((u) => `<blockquote class="instagram-media" data-instgrm-permalink="${u}" data-instgrm-version="14"><a href="${u}" target="_blank" rel="noopener">View this post on Instagram</a></blockquote>`).join('')}</div>
+      <p class="fee-note">Posts open from <a href="${IG}" target="_blank" rel="noopener">@runningcoach.gopi</a> on Instagram.</p>
+      <script async src="https://www.instagram.com/embed.js"></script>`;
+
 const pages = [];
 
 /* ------------------------------------------------------------------ HOME */
@@ -158,6 +168,7 @@ pages.push({
       'More than 20 years of experience in IT sales and corporate environments.',
       'Experience supporting running events, community promo runs and timed running events.'])}</div>
       <div class="prose"><h3>Community at the heart of what I do</h3><p>Through Riverfront Runners Group (RRG), I help support a welcoming fitness community in Ahmedabad. RRG brings people together through running, cycling, boot camp, strength and agility activities, and swimming-related guidance. Its community spirit is built around running together, training together, growing together, and staying together.</p><p><a href="/about-coach-gopi/">More about Coach Gopi</a></p></div></div>`),
+    sec('instagram', 'On Instagram', 'Runners and results', 'Recent posts from my Instagram.', igEmbed(IG_POSTS)),
     finalBand('Find the right starting point', 'Choose a free beginner running resource, explore personalised coaching, enquire about a corporate wellness programme, or discuss technical and coordination support for your next running event.', `${cta('/contact/', 'Tell Me What You Are Planning')}<a class="btn ghost" href="${IG}" target="_blank" rel="noopener">Instagram @runningcoach.gopi</a>`),
   ].join('\n'),
 });

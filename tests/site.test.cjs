@@ -18,10 +18,10 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
   for (const width of [1280, 375]) {
     for (const url of PAGES) {
       const ctx = await browser.newContext({ viewport: { width, height: 900 } });
-      await ctx.route(/fonts\.(googleapis|gstatic)\.com/, (r) => r.abort());
+      await ctx.route(/fonts\.(googleapis|gstatic)\.com|instagram\.com/, (r) => r.abort());
       const p = await ctx.newPage(); const errs = [];
       p.on('pageerror', (e) => errs.push(e.message));
-      p.on('requestfailed', (r) => { if (!/fonts\./.test(r.url())) errs.push('failed ' + r.url()); });
+      p.on('requestfailed', (r) => { if (!/fonts\.|instagram\.com/.test(r.url())) errs.push('failed ' + r.url()); });
       p.on('response', (r) => { if (r.status() >= 400 && r.url().startsWith(BASE)) errs.push(r.status() + ' ' + r.url()); });
       await p.goto(BASE + url);
       const m = await p.evaluate(() => ({
@@ -30,6 +30,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
         cur: (document.querySelector('nav a[aria-current=page]') || {}).textContent || '',
         ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } }),
+        ig: [...document.querySelectorAll('blockquote.instagram-media')].map((b) => b.getAttribute('data-instgrm-permalink')),
         links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
         imgsNoAlt: [...document.querySelectorAll('img:not([alt])')].length,
         text: document.body.innerText,
@@ -43,6 +44,8 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
+        if (url === '/') check(m.ig.length === 3 && m.ig.every((u) => /^https:\/\/www\.instagram\.com\/p\/[A-Za-z0-9_-]{11}\/$/.test(u)), 'home embeds the three shared Instagram posts with clean links', JSON.stringify(m.ig));
+        else check(m.ig.length === 0, `${url} has no Instagram embeds`, m.ig.length);
         m.links.forEach((l) => toCheck.add(l));
       } else {
         check(m.sw <= m.cw, `${url} has no horizontal scroll at 375px`, `${m.sw} vs ${m.cw}`);
