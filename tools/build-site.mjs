@@ -70,7 +70,7 @@ ${body}
     <span>Coach Gopi | Running Coach • Corporate Wellness Coach • Nutrition &amp; Diet Coach • Running Event Consultant | Ahmedabad, Gujarat, India</span>
     <span class="fnav">${NAV.map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join('')}</span>
     <span><a href="${IG}" target="_blank" rel="noopener">Instagram</a> · <a href="${LI}" target="_blank" rel="noopener">LinkedIn</a></span>
-    <span style="font-size:13px">Website designed by iviewlabs</span>
+    <span style="font-size:13px">Website designed by <a href="https://iviewlabs.com/" target="_blank" rel="noopener">iviewlabs</a></span>
   </footer>
 </div>
 <script src="/assets/site.js" defer></script>
