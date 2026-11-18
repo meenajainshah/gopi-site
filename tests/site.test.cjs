@@ -40,6 +40,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
       }));
       if (width === 1280) {
         check(m.h1 === 1, `${url} has exactly one h1`, m.h1);
+        check(m.title.length >= 40 && m.title.length <= 60 && /Coach Gopi/.test(m.title), `${url} title is 40-60 characters and names the brand`, `${m.title.length}: ${m.title}`);
         check(m.title.length > 10 && !titles.has(m.title), `${url} has a unique title`, m.title); titles.add(m.title);
         check(m.desc.length > 50 && !descs.has(m.desc), `${url} has a unique meta description`, m.desc); descs.add(m.desc);
         check(m.canon === 'https://www.coach-gopi.com' + url, `${url} canonical is the live domain`, m.canon);

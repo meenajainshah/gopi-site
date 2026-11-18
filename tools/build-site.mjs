@@ -193,7 +193,7 @@ pages.push({
 /* ----------------------------------------------------------------- ABOUT */
 pages.push({
   file: 'about-coach-gopi/index.html', url: '/about-coach-gopi/', current: '/about-coach-gopi/',
-  title: 'About Coach Gopi | Running, Wellness, Nutrition & Race Events Ahmedabad',
+  title: 'About Coach Gopi | Running Coach & Wellness, Ahmedabad',
   desc: 'Meet Gopi: UESCA Certified Running Coach, Nutrition & Diet Coach, RRG mentor, former ADR President and running event professional with corporate leadership experience.',
   ld: [person, { '@type': 'ProfilePage', url: `${SITE}/about-coach-gopi/`, mainEntity: { '@id': `${SITE}/#gopi` } }],
   h1Block: pageHero('About', 'About Coach Gopi', 'Building healthier people, stronger communities and better events.', 'I am Gopi D, a UESCA Certified Running Coach and Certified Nutrition & Diet Coach, based in Ahmedabad.'),
@@ -226,7 +226,7 @@ const runFaq = [
 ];
 pages.push({
   file: 'running-coach-ahmedabad/index.html', url: '/running-coach-ahmedabad/', current: '/running-coach-ahmedabad/',
-  title: 'Running Coach Ahmedabad | Beginner to Marathon & Ultra Training | Gopi',
+  title: 'Running Coach Ahmedabad | Beginner to Ultra | Coach Gopi',
   desc: 'Get running plans for beginners, intermediate and experienced runners. Coach Gopi offers online coaching and supervised Riverfront sessions for 5K to ultra goals.',
   ld: [person, service('Running coaching', '/running-coach-ahmedabad/', 'Online and supervised running coaching for 5K to ultra distances.'),
     { '@type': 'FAQPage', mainEntity: runFaq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }],
@@ -262,7 +262,7 @@ pages.push({
 /* ------------------------------------------------------------- NUTRITION */
 pages.push({
   file: 'nutrition-diet-coach-ahmedabad/index.html', url: '/nutrition-diet-coach-ahmedabad/', current: '/nutrition-diet-coach-ahmedabad/',
-  title: 'Nutrition & Diet Coach Ahmedabad | Personalised Diet & Weight Support',
+  title: 'Nutrition & Diet Coach Ahmedabad | Diet Plans | Coach Gopi',
   desc: 'Get practical nutrition guidance, personalised diet planning and weight-management support from Coach Gopi, a Certified Nutrition & Diet Coach in Ahmedabad and online.',
   ld: [person, service('Nutrition and diet coaching', '/nutrition-diet-coach-ahmedabad/', 'Personalised nutrition guidance and weight-management support.')],
   h1Block: pageHero('Nutrition & diet', 'Practical Nutrition Coaching for a Healthier, Stronger You', 'Eat better. Feel better. Build healthier habits.', 'Good health is shaped by more than exercise alone. Everyday food choices, routines, hydration, recovery, and consistency all matter. As a Certified Nutrition & Diet Coach, I offer practical nutrition guidance and personalised diet planning designed around your goals, food preferences, activity, and lifestyle.'),
@@ -286,7 +286,7 @@ pages.push({
 /* ------------------------------------------------------------- CORPORATE */
 pages.push({
   file: 'corporate-wellness-ahmedabad/index.html', url: '/corporate-wellness-ahmedabad/', current: '/corporate-wellness-ahmedabad/',
-  title: 'Corporate Wellness Programmes Ahmedabad | Employee Fitness Challenges',
+  title: 'Corporate Wellness Programmes Ahmedabad | Coach Gopi',
   desc: 'Engage employees with corporate step challenges, walking and running campaigns, department fitness competitions and workplace wellness programmes by Coach Gopi.',
   ld: [person, service('Corporate wellness programmes', '/corporate-wellness-ahmedabad/', 'Step challenges, walking and running campaigns and department fitness competitions.')],
   h1Block: pageHero('Corporate wellness', 'Corporate Wellness Programmes That Get Employees Moving', 'Healthier employees. More connected teams. A more active workplace.', 'Employee wellness works best when it is practical, inclusive, engaging, and consistent. I work with SMEs and corporate teams to design group fitness and wellness challenges that encourage employees to move more, build healthier habits, and connect with colleagues.'),
@@ -310,7 +310,7 @@ pages.push({
 /* ---------------------------------------------------------------- EVENTS */
 pages.push({
   file: 'running-event-management-consultant-ahmedabad/index.html', url: '/running-event-management-consultant-ahmedabad/', current: '/running-event-management-consultant-ahmedabad/',
-  title: 'Running Event Consultant & Race Director Ahmedabad | Coach Gopi',
+  title: 'Race Director & Event Consultant Ahmedabad | Coach Gopi',
   desc: 'Plan better running events with Coach Gopi. Event coordination, technical guidance, timing-team coordination, race-day operations and event promotion in Ahmedabad and Gujarat.',
   ld: [person, service('Running event management and race direction', '/running-event-management-consultant-ahmedabad/', 'Event coordination, technical guidance, timing-team coordination and race-day support.')],
   h1Block: pageHero('Events & race management', 'Running Event Management, Technical Consulting & Race Direction', 'Well-planned events create memorable experiences.', 'For runners, organisers, sponsors, and communities. With experience in running communities, race pacing, event coordination, and promotional runs, I can support running-event organisers as a Technical Consultant or Race Director, depending on the event\'s requirements and agreed scope.'),
