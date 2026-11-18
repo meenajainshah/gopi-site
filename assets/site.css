@@ -180,6 +180,7 @@ footer{padding-block:36px 48px;color:var(--muted);font-size:14px;display:flex;fl
   .top nav{width:100%;justify-content:flex-start;flex-wrap:wrap;gap:8px;font-size:15px}
   .top nav a{padding:9px 12px;min-height:40px;display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:6px;background:var(--surface);line-height:1.2}
   .top nav a[aria-current="page"]{border-color:var(--accent);text-decoration:none}
+  .top nav a.btn{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:600;margin-left:0}
 }
 .hero h1 .sub{display:block;font-size:.34em;line-height:1.15;letter-spacing:.02em;color:var(--muted);margin-top:14px;font-weight:700}
 .page-hero{padding-block:56px 24px;max-width:46em}
@@ -235,3 +236,6 @@ footer a{color:inherit}
 
 .ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;align-items:start}
 .ig-grid .instagram-media{min-width:0!important;max-width:100%!important;width:100%!important;margin:0!important}
+
+.top nav a.btn{padding:9px 16px;font-size:15px;color:var(--accent-ink);margin-left:6px}
+.top nav a.btn:hover{opacity:.9}

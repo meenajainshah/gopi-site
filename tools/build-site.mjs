@@ -50,6 +50,13 @@ function layout({ url, current, title, desc, h1Block, body, ld = [], extraHead =
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Coach Gopi, UESCA certified running coach in Ahmedabad">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<meta name="theme-color" content="#F4F7F6">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
 <link rel="stylesheet" href="/assets/site.css">
 <script type="application/ld+json">${JSON.stringify(graph)}</script>
@@ -60,6 +67,7 @@ ${extraHead}</head>
     <a class="brand" href="/">Coach <span>Gopi</span></a>
     <nav aria-label="Main">
       ${nav}
+      <a class="btn" href="/contact/" data-track="enquire_now">Enquire Now</a>
     </nav>
   </header>
   <main id="top">
@@ -121,13 +129,22 @@ const igEmbed = (urls) => `<div class="ig-grid">${urls.map((u) => `<blockquote c
       <p class="fee-note">Posts open from <a href="${IG}" target="_blank" rel="noopener">@runningcoach.gopi</a> on Instagram.</p>
       <script async src="https://www.instagram.com/embed.js"></script>`;
 
+const REL = {
+  '/running-coach-ahmedabad/': ['Running coaching', 'Online and Riverfront coaching from 5K to ultra.'],
+  '/nutrition-diet-coach-ahmedabad/': ['Nutrition & diet coaching', 'Practical diet guidance and weight-management support.'],
+  '/corporate-wellness-ahmedabad/': ['Corporate wellness', 'Step challenges and fitness programmes for employees.'],
+  '/running-event-management-consultant-ahmedabad/': ['Events & race management', 'Technical consulting and race direction for running events.'],
+  '/about-coach-gopi/': ['About Coach Gopi', 'Credentials, community work and event experience.'],
+};
+const related = (urls) => sec('more', 'More from Coach Gopi', 'Explore other services', '', `<div class="grid g3">${urls.map((u) => card('Explore', REL[u][0], REL[u][1], '', `<a href="${u}">${esc(REL[u][0])}</a>`)).join('')}</div>`);
+
 const pages = [];
 
 /* ------------------------------------------------------------------ HOME */
 const homeDesc = 'Explore running coaching, nutrition guidance, corporate wellness and race event consulting with Coach Gopi in Ahmedabad. From beginner running plans to event coordination.';
 pages.push({
   file: 'index.html', url: '/', current: '/',
-  title: 'Running Coach, Corporate Wellness & Race Event Consultant Ahmedabad | Coach Gopi', desc: homeDesc,
+  title: 'Running Coach in Ahmedabad | Wellness & Events | Coach Gopi', desc: homeDesc,
   ld: [person, { '@type': 'WebSite', '@id': `${SITE}/#site`, url: `${SITE}/`, name: 'Coach Gopi', publisher: { '@id': `${SITE}/#gopi` } },
     service('Running coaching', '/running-coach-ahmedabad/', 'Online and supervised running coaching for 5K to ultra distances.'),
     service('Nutrition and diet coaching', '/nutrition-diet-coach-ahmedabad/', 'Personalised nutrition guidance and weight-management support.'),
@@ -237,7 +254,8 @@ pages.push({
       <p class="callout" style="margin-top:18px"><strong>Please note:</strong> this is a general self-guided resource, not an individually assessed training prescription. Anyone with a medical condition, injury, or concerns about starting exercise should seek appropriate professional advice. Adapt or stop if you experience unusual pain or symptoms.</p>
       <div class="cta-row" style="margin-top:18px">${cta('/contact/?service=running', 'Enquire About Online Coaching', 'running_coaching_enquiry')}${cta('/contact/?service=running', 'Enquire About Riverfront Training', 'running_coaching_enquiry', true)}</div>`),
     sec('faq', 'Questions', 'Frequently asked questions', '', faq(runFaq)),
-    finalBand('Ready for your next run?', 'Tell me where you are with running and what you want to finish. I will help you pick the right starting point.', `${cta('/contact/?service=running', 'Enquire About Online Coaching', 'running_coaching_enquiry')}${cta('/nutrition-diet-coach-ahmedabad/', 'Nutrition & Diet', '', true)}`),
+    related(['/nutrition-diet-coach-ahmedabad/', '/corporate-wellness-ahmedabad/', '/running-event-management-consultant-ahmedabad/']),
+    finalBand('Ready for your next run?', 'Tell me where you are with running and what you want to finish. I will help you pick the right starting point.', `${cta('/contact/?service=running', 'Join a Programme', 'running_coaching_enquiry')}${cta('/contact/?service=running', 'Enquire About Online Coaching', 'running_coaching_enquiry', true)}`),
   ].join('\n'),
 });
 
@@ -260,6 +278,7 @@ pages.push({
     sec('process', 'Process', 'How the process works', '', `<ol class="steps5"><li><b>Understand</b>Your goals, routine, food preferences, and current habits.</li><li><b>Discuss</b>A practical nutrition approach that fits your lifestyle.</li><li><b>Create</b>A personalised diet-guidance plan within the scope of the service.</li><li><b>Review</b>Progress, with practical adjustments.</li><li><b>Sustain</b>Habits that are realistic to maintain over time.</li></ol>`),
     sec('fees', 'Fees', 'Standalone nutrition / diet plan fees', '', table(['Commitment', 'Monthly fee'], [['Quarterly sign up, 3 months', '₹2,750/month'], ['Half-yearly sign up, 6 months', '₹2,600/month'], ['Annual sign up, 12 months', '₹2,500/month']], 'prices') + `<p class="fee-note">Nutrition is also available as a lower-priced add-on to running coaching: see <a href="/running-coach-ahmedabad/#fees">running coaching fees</a>.</p>`),
     sec('approach', 'Approach', 'A practical, sustainable approach', '', `<div class="prose"><p>No single diet suits everyone. Food choices should take account of individual needs, preferences, culture, routine, activity, and health context.</p></div><p class="callout" style="margin-top:16px;max-width:44em"><strong>Medical conditions:</strong> where a medical condition or therapeutic diet is involved, work with an appropriately qualified healthcare professional or registered dietitian.</p>`),
+    related(['/running-coach-ahmedabad/', '/corporate-wellness-ahmedabad/', '/about-coach-gopi/']),
     finalBand('Start with a conversation', 'Tell me your goals and your routine, and I will suggest a practical starting point.', `${cta('/contact/?service=nutrition', 'Enquire About Nutrition Coaching', 'nutrition_enquiry')}${cta('/running-coach-ahmedabad/', 'Running Coaching', '', true)}`),
   ].join('\n'),
 });
@@ -283,7 +302,8 @@ pages.push({
     </div>`),
     sec('how', 'How a programme works', 'How a programme works', '', `<ol class="steps5"><li><b>Discover</b>Discuss workforce size, objectives, work patterns, current activities, and practical constraints.</li><li><b>Design</b>Agree the challenge format, duration, participation rules, measurement approach, and recognition plan.</li><li><b>Launch</b>Provide clear communications and encourage employees and departments to participate.</li><li><b>Engage</b>Share progress updates, leaderboards, reminders, and team milestones.</li><li><b>Review</b>Report agreed participation and activity measures, recognise achievements, and recommend next steps.</li></ol>`),
     sec('why', 'Why Coach Gopi', 'Why Coach Gopi for corporate wellness?', '', list(['More than 20 years of experience in IT sales and corporate environments.', 'UESCA Certified Running Coach and Certified Nutrition & Diet Coach.', 'Experience coaching and mentoring runners since 2016.', 'Mentor with Riverfront Runners Group, an Ahmedabad fitness community of 200+ members.', 'Former President of ADR, with experience starting and growing a chapter into the organisation\'s largest group.', 'Experience designing activities that welcome beginners as well as experienced fitness participants.'])),
-    sec('enquire', 'Enquire', 'Start a workplace wellness conversation', 'Whether you are an SME planning your first employee step challenge or a larger organisation looking for a monthly wellness calendar, I can help shape a programme around your workforce.', form('corporate wellness', 'corporate_wellness_enquiry', `<div class="f2">${field('cw-company', 'company', 'Company name')}${field('cw-person', 'contact_person', 'Contact person', { req: true, ac: 'name' })}${field('cw-email', 'email', 'Work email', { type: 'email', ac: 'email' })}${field('cw-phone', 'contact', 'Phone or WhatsApp', { req: true, ac: 'tel' })}${field('cw-city', 'city', 'City')}${field('cw-size', 'employees', 'Approximate employee count')}${select('cw-prog', 'programme', 'Preferred programme', ['Not sure yet', 'Corporate step challenge', 'Walking and running challenge', 'Department-versus-department challenge', 'Monthly wellness challenges', 'Group fitness and running sessions'])}${field('cw-start', 'start_month', 'Desired start month')}</div>${area('cw-msg', 'message', 'Message', 'Tell me about your workforce and what you would like to achieve')}`, 'Request a Corporate Wellness Consultation')),
+    sec('enquire', 'Enquire', 'Start a workplace wellness conversation', 'Whether you are an SME planning your first employee step challenge or a larger organisation looking for a monthly wellness calendar, I can help shape a programme around your workforce.', form('corporate wellness', 'corporate_wellness_enquiry', `<div class="f2">${field('cw-company', 'company', 'Company name')}${field('cw-person', 'contact_person', 'Contact person', { req: true, ac: 'name' })}${field('cw-email', 'email', 'Work email', { type: 'email', ac: 'email' })}${field('cw-phone', 'contact', 'Phone or WhatsApp', { req: true, ac: 'tel' })}${field('cw-city', 'city', 'City')}${field('cw-size', 'employees', 'Approximate employee count')}${select('cw-prog', 'programme', 'Preferred programme', ['Not sure yet', 'Corporate step challenge', 'Walking and running challenge', 'Department-versus-department challenge', 'Monthly wellness challenges', 'Group fitness and running sessions'])}${field('cw-start', 'start_month', 'Desired start month')}</div>${area('cw-msg', 'message', 'Message', 'Tell me about your workforce and what you would like to achieve')}`, 'Book a Corporate Wellness Consultation')),
+    related(['/running-event-management-consultant-ahmedabad/', '/running-coach-ahmedabad/', '/about-coach-gopi/']),
   ].join('\n'),
 });
 
@@ -312,7 +332,8 @@ pages.push({
     </div>`),
     sec('approach', 'Approach', 'A structured approach', '', `<ol class="steps5"><li><b>Understand the event</b>Format, distance, expected participation, venue, timeline, objectives, and organiser requirements.</li><li><b>Define responsibilities</b>Agree the role, decision authority, deliverables, fees, reporting lines, and scope in writing.</li><li><b>Plan</b>Prepare a coordination plan, event timeline, operational checklist, communication flow, and risk and escalation process.</li><li><b>Coordinate</b>Align organisers, vendors, volunteers, timing providers, venue contacts, and promotion teams.</li><li><b>Deliver and review</b>Support race-day execution within the agreed role and conduct a post-event review with lessons learned.</li></ol>`),
     sec('who', 'Who can engage me', 'Who can engage me?', '', list(['Marathon and road-race organisers.', 'Running clubs and fitness communities.', 'Schools, colleges, and universities planning running events.', 'Corporate teams organising fitness events or employee runs.', 'Brands and event agencies planning promotional runs or community fitness activations.'])),
-    sec('enquire', 'Enquire', "Let's plan your next running event", "If you are organising a running event and need technical guidance, event coordination, timing-team coordination, community promotion, or race-day leadership, let's discuss the event format and the support you need.", form('event management', 'event_management_enquiry', `<div class="f2">${field('ev-org', 'organisation', 'Organisation / event name')}${field('ev-person', 'contact_person', 'Contact person', { req: true, ac: 'name' })}${field('ev-date', 'event_date', 'Event date or proposed period')}${field('ev-loc', 'location', 'Location')}${select('ev-type', 'event_type', 'Event type', ['Road race or marathon', 'Community 10K or time trial', 'Promotional run', 'Night or ultra event', 'Corporate or employee run', 'Other'])}${field('ev-count', 'participants', 'Expected participant count')}${select('ev-need', 'support_required', 'Support required', ['Event coordination', 'Technical guidance and race planning', 'Timing-team coordination', 'Event promotion', 'Race director support', 'Not sure yet'])}${select('ev-stage', 'planning_stage', 'Current planning stage', ['Early idea', 'Planning started', 'Date and venue fixed', 'Close to race day'])}</div>${field('ev-contact', 'contact', 'Phone, WhatsApp or email', { req: true })}${area('ev-msg', 'message', 'Message', 'Tell me about the event and what support you need')}`, 'Request an Event Consultation')),
+    sec('enquire', 'Enquire', "Let's plan your next running event", "If you are organising a running event and need technical guidance, event coordination, timing-team coordination, community promotion, or race-day leadership, let's discuss the event format and the support you need.", form('event management', 'event_management_enquiry', `<div class="f2">${field('ev-org', 'organisation', 'Organisation / event name')}${field('ev-person', 'contact_person', 'Contact person', { req: true, ac: 'name' })}${field('ev-date', 'event_date', 'Event date or proposed period')}${field('ev-loc', 'location', 'Location')}${select('ev-type', 'event_type', 'Event type', ['Road race or marathon', 'Community 10K or time trial', 'Promotional run', 'Night or ultra event', 'Corporate or employee run', 'Other'])}${field('ev-count', 'participants', 'Expected participant count')}${select('ev-need', 'support_required', 'Support required', ['Event coordination', 'Technical guidance and race planning', 'Timing-team coordination', 'Event promotion', 'Race director support', 'Not sure yet'])}${select('ev-stage', 'planning_stage', 'Current planning stage', ['Early idea', 'Planning started', 'Date and venue fixed', 'Close to race day'])}</div>${field('ev-contact', 'contact', 'Phone, WhatsApp or email', { req: true })}${area('ev-msg', 'message', 'Message', 'Tell me about the event and what support you need')}`, 'Book an Event Consultation')),
+    related(['/corporate-wellness-ahmedabad/', '/running-coach-ahmedabad/', '/about-coach-gopi/']),
   ].join('\n'),
 });
 
@@ -340,4 +361,29 @@ for (const p of pages) {
 const urls = pages.map((p) => `  <url><loc>${SITE}${p.url}</loc></url>`).join('\n');
 writeFileSync(resolve(root, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`);
 writeFileSync(resolve(root, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`);
-console.log('wrote sitemap.xml and robots.txt');
+writeFileSync(resolve(root, 'llms.txt'), `# Coach Gopi
+
+> Coach Gopi (Gopi D) is a UESCA Certified Running Coach and Certified Nutrition & Diet Coach in Ahmedabad, Gujarat, India. He has trained runners since 2016 and offers running coaching (online and supervised at Riverfront, Ahmedabad), nutrition and diet coaching, corporate wellness programmes, and running event management and race direction.
+
+## Pages
+- [Home](${SITE}/): Overview of running, wellness, nutrition and event services.
+- [Running coaching](${SITE}/running-coach-ahmedabad/): Coaching for beginners to ultra runners, fees, and a free 12-week beginner-to-10K plan.
+- [Nutrition & diet coaching](${SITE}/nutrition-diet-coach-ahmedabad/): Personalised diet guidance and weight-management support, with fees.
+- [Corporate wellness](${SITE}/corporate-wellness-ahmedabad/): Step challenges, walking and running campaigns, department competitions and group sessions for companies.
+- [Events & race management](${SITE}/running-event-management-consultant-ahmedabad/): Event coordination, technical guidance, timing-team coordination, promotion and race-day support.
+- [About Coach Gopi](${SITE}/about-coach-gopi/): Credentials, race-pacing experience, Riverfront Runners Group mentoring, ADR leadership.
+- [Contact](${SITE}/contact/): Enquiry form for all services.
+
+## Key facts
+- Location: Ahmedabad, Gujarat, India. Online coaching is available outside Ahmedabad.
+- Credentials: UESCA Certified Running Coach; Certified Nutrition & Diet Coach.
+- Running coaching fees per month (3, 6, 12 month commitments): online Rs 2,750 / 2,625 / 2,500; physical at Riverfront (8 sessions a month) Rs 4,800 / 4,650 / 4,500; nutrition add-on Rs 1,750 / 1,600 / 1,500. Minimum commitment is 3 months.
+- Standalone nutrition and diet plan per month: Rs 2,750 / 2,600 / 2,500.
+- Race pacing: 20 half marathons at 2:30, 6 10K races at 70 minutes, one full marathon under 5 hours.
+- Free resource: 12-week beginner-to-10K plan on the running coaching page (general self-guided resource, not individual medical or training advice).
+
+## Profiles
+- [Instagram](${IG})
+- [LinkedIn](${LI})
+`);
+console.log('wrote sitemap.xml, robots.txt and llms.txt');
