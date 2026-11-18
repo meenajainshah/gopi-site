@@ -4,7 +4,7 @@ const { spawn } = require('node:child_process');
 const fs = require('node:fs'), path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const PORT = 8123, BASE = `http://127.0.0.1:${PORT}`;
-const PAGES = ['/', '/about-coach-gopi/', '/running-coach-ahmedabad/', '/nutrition-diet-coach-ahmedabad/', '/corporate-wellness-ahmedabad/', '/running-event-management-consultant-ahmedabad/', '/contact/'];
+const PAGES = ['/', '/about-coach-gopi/', '/running-coach-ahmedabad/', '/nutrition-diet-coach-ahmedabad/', '/corporate-wellness-ahmedabad/', '/running-event-management-consultant-ahmedabad/', '/contact/', '/privacy-policy/', '/terms-and-disclaimer/'];
 let failed = 0;
 const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + label + (ok ? '' : '  -> ' + extra)); if (!ok) failed++; };
 
@@ -30,6 +30,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
         icons: ['link[rel=icon][href="/favicon.ico"]', 'link[rel=icon][href="/favicon.svg"]', 'link[rel=apple-touch-icon]', 'link[rel=manifest]'].map((q) => !!document.querySelector(q)),
         cta: (document.querySelector('.top nav a.btn') || {}).getAttribute ? document.querySelector('.top nav a.btn').getAttribute('href') : '',
+        legal: [...document.querySelectorAll('footer a')].map((a) => a.getAttribute('href')),
         credit: (document.querySelector('footer a[href*="iviewlabs"]') || {}).href || '',
         cur: (document.querySelector('nav a[aria-current=page]') || {}).textContent || '',
         ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } }),
@@ -47,8 +48,9 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         check(m.og && m.ld.length > 0 && m.ld.every(Boolean), `${url} has og tags and valid JSON-LD`);
         check(m.credit === 'https://iviewlabs.com/', `${url} footer links to iviewlabs`, m.credit);
         check(m.icons.every(Boolean), `${url} links the favicon, touch icon and manifest`, JSON.stringify(m.icons));
+        check(m.legal.includes('/privacy-policy/') && m.legal.includes('/terms-and-disclaimer/'), `${url} footer links the privacy and terms pages`, JSON.stringify(m.legal));
         check(m.cta === '/contact/', `${url} header has an Enquire Now button`, m.cta);
-        check(m.cur !== '', `${url} marks the current nav item`, m.cur);
+        if (!/privacy|terms/.test(url)) check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
         if (url === '/') check(m.ig.length === 3 && m.ig.every((u) => /^https:\/\/www\.instagram\.com\/p\/[A-Za-z0-9_-]{11}\/$/.test(u)), 'home embeds the three public Instagram posts with clean links', JSON.stringify(m.ig));

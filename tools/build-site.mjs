@@ -77,6 +77,7 @@ ${body}
   <footer>
     <span>Coach Gopi | Running Coach • Corporate Wellness Coach • Nutrition &amp; Diet Coach • Running Event Consultant | Ahmedabad, Gujarat, India</span>
     <span class="fnav">${NAV.map(([h, t]) => `<a href="${h}">${esc(t)}</a>`).join('')}</span>
+    <span class="fnav"><a href="/privacy-policy/">Privacy Policy</a><a href="/terms-and-disclaimer/">Terms &amp; Disclaimer</a></span>
     <span><a href="${IG}" target="_blank" rel="noopener">Instagram</a> · <a href="${LI}" target="_blank" rel="noopener">LinkedIn</a></span>
     <span style="font-size:13px">Website designed by <a href="https://iviewlabs.com/" target="_blank" rel="noopener">iviewlabs</a></span>
   </footer>
@@ -351,6 +352,52 @@ pages.push({
   ].join('\n'),
 });
 
+
+/* ----------------------------------------------------------- LEGAL PAGES */
+const LEGAL_UPDATED = '18 November 2026';
+const legalBlock = (blocks) => `<section><div class="prose legal">${blocks.map(([h2, ...ps]) => `<h3>${esc(h2)}</h3>${ps.map((p) => Array.isArray(p) ? list(p) : `<p>${p}</p>`).join('')}`).join('')}</div></section>`;
+
+pages.push({
+  file: 'privacy-policy/index.html', url: '/privacy-policy/', current: '',
+  title: 'Privacy Policy | Coach Gopi Running Coach Ahmedabad',
+  desc: 'How Coach Gopi handles the personal details you share through enquiry forms, WhatsApp and the website, and who else sees them.',
+  ld: [person],
+  h1Block: pageHero('Legal', 'Privacy Policy', '', `Last updated ${LEGAL_UPDATED}. This explains what personal details this website collects, why, and who else sees them.`),
+  body: legalBlock([
+    ['Who is responsible', 'This website is run by Coach Gopi (Gopi D), a running coach, nutrition and diet coach, wellness consultant and running event consultant based in Ahmedabad, Gujarat, India. In this policy, "I" and "me" mean Coach Gopi. You can reach me through the <a href="/contact/">Contact page</a>.'],
+    ['What I collect', 'I only collect what you choose to send me:', ['Enquiry forms (Contact, Corporate Wellness, Events): your name, email address or phone number, and whatever else you type, such as your company name, city, number of employees, event details or message.', 'WhatsApp: if you message me on WhatsApp, I see the number and the messages you send.', 'Health details: if you tell me about an injury or a medical condition so that I can guide you, I use it only for that purpose. Please share only what you are comfortable with.'], 'The share card pages let you type a name to put on a card. That name appears only on the card and in the link you create. This website does not store it.'],
+    ['How enquiries reach me', 'This website has no database of its own. When you send an enquiry form, it is emailed to me through FormSubmit, a form-forwarding service. FormSubmit handles the message on its way to my inbox. The enquiry then sits in my email like any other message.'],
+    ['Why I use your details', ['To reply to your enquiry and suggest the right coaching, nutrition, wellness or event support.', 'To provide a service you ask for, including plans, feedback and invoices.', 'To meet legal or accounting obligations, where they apply.'], 'I do not sell your details and I do not send marketing messages unless you ask for them.'],
+    ['Who else may see your information', ['FormSubmit, which forwards form enquiries to my email.', 'WhatsApp (Meta), if you contact me there.', 'Instagram (Meta): the home page shows embedded Instagram posts. Loading them lets Instagram see that your browser visited the page.', 'Google Fonts: the site loads its fonts from Google, which receives your IP address when the fonts load.', 'The website host (Render), which keeps standard server logs such as IP addresses and the pages requested.'], 'These services have their own privacy policies. I do not control them.'],
+    ['Cookies and tracking', 'This website does not set cookies of its own and does not currently use advertising or analytics tracking. Embedded content such as Instagram posts may set cookies from the provider. If I add analytics later, I will update this page.'],
+    ['How long I keep it', 'I keep enquiry emails for as long as I need them to reply to you, to provide a service, and for any records the law requires. You can ask me to delete them sooner.'],
+    ['Your choices', 'You can ask me to show you the details I hold about you, correct them, or delete them, and you can withdraw consent at any time. Contact me through the <a href="/contact/">Contact page</a> and I will respond as soon as I can. These choices are offered in line with applicable Indian law, including the Digital Personal Data Protection Act, 2023.'],
+    ['Children', 'This website is meant for adults. If you are under 18, please ask a parent or guardian to contact me for you.'],
+    ['Security', 'I take reasonable care to protect the details you send me, but no method of sending information over the internet is completely secure.'],
+    ['Changes to this policy', 'If I change how I handle personal details, I will update this page and the date at the top.'],
+  ]),
+});
+
+pages.push({
+  file: 'terms-and-disclaimer/index.html', url: '/terms-and-disclaimer/', current: '',
+  title: 'Terms & Disclaimer | Coach Gopi Running Coach Ahmedabad',
+  desc: 'Terms of use and health disclaimer for Coach Gopi: running coaching, nutrition guidance, corporate wellness and running event services in Ahmedabad.',
+  ld: [person],
+  h1Block: pageHero('Legal', 'Terms & Disclaimer', '', `Last updated ${LEGAL_UPDATED}. Please read this before using the website or the services of Coach Gopi.`),
+  body: legalBlock([
+    ['About this website', 'This website is run by Coach Gopi (Gopi D), based in Ahmedabad, Gujarat, India. By using it you agree to these terms. If you do not agree, please do not use the website.'],
+    ['Health and fitness disclaimer', 'Running, exercise and changes to your diet carry some risk. The information on this website and in my coaching is general guidance. It is not medical advice and is not a substitute for a doctor, physiotherapist or registered dietitian.', ['Check with a doctor before you start or change an exercise or diet programme, especially if you have a medical condition, an injury, are pregnant, or have not exercised for a long time.', 'Stop and seek advice if you feel pain, dizziness, breathlessness or any unusual symptoms.', 'Where a medical condition or therapeutic diet is involved, work with an appropriately qualified healthcare professional.', 'You take part at your own risk and are responsible for training within your own limits.']],
+    ['Free beginner plan', 'The free 12-week beginner-to-10K plan is a general self-guided resource. It is not an individually assessed training plan. Follow it progressively and adapt or stop if you notice pain or unusual symptoms.'],
+    ['Coaching and nutrition services', ['Fees are the monthly fees shown on the <a href="/running-coach-ahmedabad/">Running</a> and <a href="/nutrition-diet-coach-ahmedabad/">Nutrition</a> pages. The minimum commitment is 3 months. I may update fees for new sign-ups.', 'Plans, feedback and sessions are tailored to what you tell me. Please give accurate information about your health, fitness and goals.', 'Any refund, pause or cancellation terms are agreed with me before you start.', 'Results depend on many things, including your effort, health, rest and nutrition. I cannot promise a particular finish time, race result, weight or health outcome.']],
+    ['Corporate wellness and event services', ['The scope, role, responsibilities, deliverables and fees for corporate wellness programmes and event work are agreed in writing before work starts.', 'Where I support an event as a technical consultant or race director, I work within the authority and scope agreed with the organiser. The organiser stays responsible for the event, including permissions, insurance, safety and legal compliance.', 'Timing equipment, chip systems, official result validation and timing-provider deliverables remain the responsibility of the appointed specialist provider unless separately contracted.']],
+    ['Website content and third-party links', 'I try to keep the information on this website accurate and current, but I do not guarantee that it is complete or error-free. Examples of past work describe involvement and experience, not guaranteed outcomes. Instagram posts and links to other websites are provided by third parties, and I am not responsible for their content or privacy practices.'],
+    ['Intellectual property', 'The text, design and original photographs on this website belong to me or are used with permission. Please do not copy or reuse them without asking first. You may share links to the website and its share cards.'],
+    ['Limits on my responsibility', 'To the extent the law allows, I am not liable for injury, loss or damage that results from using this website, from following the free plan, or from information provided in good faith. Nothing here limits any rights you have under law that cannot be limited.'],
+    ['Governing law', 'These terms are governed by the laws of India. Any dispute will be handled by the courts at Ahmedabad, Gujarat.'],
+    ['Changes and contact', 'I may update these terms from time to time. The date at the top shows the latest version. Questions are welcome through the <a href="/contact/">Contact page</a>. See also the <a href="/privacy-policy/">Privacy Policy</a>.'],
+  ]),
+});
+
 for (const p of pages) {
   const html = layout({ ...p, body: p.body });
   const out = resolve(root, p.file);
@@ -373,6 +420,8 @@ writeFileSync(resolve(root, 'llms.txt'), `# Coach Gopi
 - [Events & race management](${SITE}/running-event-management-consultant-ahmedabad/): Event coordination, technical guidance, timing-team coordination, promotion and race-day support.
 - [About Coach Gopi](${SITE}/about-coach-gopi/): Credentials, race-pacing experience, Riverfront Runners Group mentoring, ADR leadership.
 - [Contact](${SITE}/contact/): Enquiry form for all services.
+- [Privacy Policy](${SITE}/privacy-policy/): What personal details the website collects and who else sees them.
+- [Terms & Disclaimer](${SITE}/terms-and-disclaimer/): Terms of use, health disclaimer and service terms.
 
 ## Key facts
 - Location: Ahmedabad, Gujarat, India. Online coaching is available outside Ahmedabad.
