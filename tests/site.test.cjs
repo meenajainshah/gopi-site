@@ -28,6 +28,8 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         h1: document.querySelectorAll('h1').length, title: document.title, desc: (document.querySelector('meta[name=description]') || {}).content || '',
         canon: (document.querySelector('link[rel=canonical]') || {}).href || '', og: !!document.querySelector('meta[property="og:image"]'),
         sw: document.documentElement.scrollWidth, cw: document.documentElement.clientWidth,
+        icons: ['link[rel=icon][href="/favicon.ico"]', 'link[rel=icon][href="/favicon.svg"]', 'link[rel=apple-touch-icon]', 'link[rel=manifest]'].map((q) => !!document.querySelector(q)),
+        cta: (document.querySelector('.top nav a.btn') || {}).getAttribute ? document.querySelector('.top nav a.btn').getAttribute('href') : '',
         credit: (document.querySelector('footer a[href*="iviewlabs"]') || {}).href || '',
         cur: (document.querySelector('nav a[aria-current=page]') || {}).textContent || '',
         ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } }),
@@ -43,6 +45,8 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         check(m.canon === 'https://www.coach-gopi.com' + url, `${url} canonical is the live domain`, m.canon);
         check(m.og && m.ld.length > 0 && m.ld.every(Boolean), `${url} has og tags and valid JSON-LD`);
         check(m.credit === 'https://iviewlabs.com/', `${url} footer links to iviewlabs`, m.credit);
+        check(m.icons.every(Boolean), `${url} links the favicon, touch icon and manifest`, JSON.stringify(m.icons));
+        check(m.cta === '/contact/', `${url} header has an Enquire Now button`, m.cta);
         check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
@@ -52,7 +56,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
       } else {
         check(m.sw <= m.cw, `${url} has no horizontal scroll at 375px`, `${m.sw} vs ${m.cw}`);
         const nav = await p.evaluate(() => [...document.querySelectorAll('.top nav a')].map((a) => { const r = a.getBoundingClientRect(); return r.left >= 0 && r.right <= document.documentElement.clientWidth && r.height >= 36; }));
-        check(nav.length === 7 && nav.every(Boolean), `${url} shows all 7 menu items on screen at 375px`, JSON.stringify(nav));
+        check(nav.length === 8 && nav.every(Boolean), `${url} shows all 8 menu items on screen at 375px`, JSON.stringify(nav));
         if (url === '/' || url === '/running-coach-ahmedabad/') await p.screenshot({ path: path.join('/tmp', `shot-${url.replace(/\W/g, '') || 'home'}.png`), fullPage: true });
       }
       check(errs.length === 0, `${url} @${width} loads without errors`, errs.join(' | '));
@@ -91,6 +95,14 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
   const p3 = await c3.newPage(); await p3.goto(BASE + '/contact/'); await p3.fill('#ct-name', 'Test'); await p3.fill('#ct-contact', 'a@b.co'); await p3.click('button[type=submit]');
   await p3.waitForSelector('.form-status a', { timeout: 4000 }).catch(() => {});
   check(((await p3.getAttribute('.form-status a', 'href').catch(() => '')) || '').startsWith('https://wa.me/919879298039?text='), 'failed email falls back to a WhatsApp link');
+
+  // favicon files, llms.txt, home title length
+  for (const f of ['favicon.ico', 'favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'site.webmanifest']) check(fs.existsSync(path.join(root, f)) && fs.statSync(path.join(root, f)).size > 100, `${f} exists`);
+  const llms = fs.readFileSync(path.join(root, 'llms.txt'), 'utf8');
+  check(PAGES.every((u) => llms.includes('https://www.coach-gopi.com' + u)) && llms.startsWith('# Coach Gopi'), 'llms.txt lists the business and every page');
+  check(!/radiscan/i.test(llms), 'llms.txt carries no unconfirmed claims');
+  const homeTitle = ((fs.readFileSync(path.join(root, 'index.html'), 'utf8').match(/<title>([^<]*)<\/title>/) || [])[1] || '').replace(/&amp;/g, '&');
+  check(homeTitle.length >= 50 && homeTitle.length <= 60 && /Running Coach/.test(homeTitle) && /Coach Gopi/.test(homeTitle), 'home title is 50-60 characters with the keyword and brand', `${homeTitle.length}: ${homeTitle}`);
 
   // sitemap and robots
   const sm = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');

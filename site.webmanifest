@@ -1,0 +1,13 @@
+{
+  "name": "Coach Gopi",
+  "short_name": "Coach Gopi",
+  "description": "Running coach, nutrition and diet coach, corporate wellness and running event consultant in Ahmedabad.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#F4F7F6",
+  "theme_color": "#F4F7F6",
+  "icons": [
+    {"src": "/icon-192.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "/icon-512.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
