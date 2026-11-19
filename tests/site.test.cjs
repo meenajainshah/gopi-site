@@ -34,6 +34,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         credit: (document.querySelector('footer a[href*="iviewlabs"]') || {}).href || '',
         cur: (document.querySelector('nav a[aria-current=page]') || {}).textContent || '',
         ld: [...document.querySelectorAll('script[type="application/ld+json"]')].map((s) => { try { JSON.parse(s.textContent); return true; } catch (e) { return false; } }),
+        igBox: (() => { const g = document.querySelector('.ig-grid'); if (!g) return ''; const c = getComputedStyle(g); return c.position + ' ' + c.overflow; })(),
         ig: [...document.querySelectorAll('blockquote.instagram-media')].map((b) => b.getAttribute('data-instgrm-permalink')),
         links: [...document.querySelectorAll('a[href^="/"]')].map((a) => a.getAttribute('href')),
         imgsNoAlt: [...document.querySelectorAll('img:not([alt])')].length,
@@ -53,6 +54,7 @@ const check = (ok, label, extra) => { console.log((ok ? 'PASS ' : 'FAIL ') + lab
         if (!/privacy|terms/.test(url)) check(m.cur !== '', `${url} marks the current nav item`, m.cur);
         check(m.imgsNoAlt === 0, `${url} images all have alt`);
         check(!/radiscan|20% in employee|15% in employee/i.test(m.text), `${url} carries no unconfirmed Radiscan figures`);
+        if (url === '/') check(m.igBox === 'relative hidden', 'home Instagram grid contains the embed so it cannot widen the page', m.igBox);
         if (url === '/') check(m.ig.length === 3 && m.ig.every((u) => /^https:\/\/www\.instagram\.com\/p\/[A-Za-z0-9_-]{11}\/$/.test(u)), 'home embeds the three public Instagram posts with clean links', JSON.stringify(m.ig));
         else check(m.ig.length === 0, `${url} has no Instagram embeds`, m.ig.length);
         m.links.forEach((l) => toCheck.add(l));
