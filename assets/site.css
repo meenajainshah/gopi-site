@@ -235,7 +235,9 @@ footer .fnav{display:flex;flex-wrap:wrap;gap:6px 18px}
 footer a{color:inherit}
 
 .ig-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;align-items:start}
-.ig-grid .instagram-media{min-width:0!important;max-width:100%!important;width:100%!important;margin:0!important}
+.ig-grid{position:relative;overflow:hidden}
+.ig-grid blockquote.instagram-media{min-width:0!important;max-width:100%!important;width:100%!important;margin:0!important}
+.ig-grid iframe.instagram-media{max-width:100%!important;min-width:0!important}
 
 .top nav a.btn{padding:9px 16px;font-size:15px;color:var(--accent-ink);margin-left:6px}
 .top nav a.btn:hover{opacity:.9}
