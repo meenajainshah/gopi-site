@@ -8,6 +8,6 @@ Source of truth for the look of every Coach Gopi page. Published copy (with live
 - `components/<Name>/README.md` and `preview.html`: usage notes and a live preview for each component.
 - `design-system.json`: index file used by the design system viewer.
 
-The live site defines the same token names in the `:root` block of `/assets/site.css`. When a colour or font changes, change it in `tokens.json` and in `assets/site.css`, then rebuild the share cards (`node tools/build-card.mjs`) and the preview image (`node tools/build-og-image.cjs`).
+The live site defines the same token names in the `:root` block of `/assets/site.css`. When a colour or font changes, change it in `tokens.json` and in `assets/site.css`, then rebuild the pages, the share cards and the preview image with the build scripts (kept outside this repository, in the `gopi-site-dev-files` archive).
 
 These files are not served as part of the site pages; they are reference only.
