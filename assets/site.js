@@ -16,6 +16,23 @@
     if (a) { track(a.getAttribute('data-track')); }
   });
 
+  // Load Instagram embeds only when the posts come near the screen: they are several MB.
+  var ig = document.querySelector('.instagram-media');
+  if (ig) {
+    var loadIg = function () {
+      if (document.getElementById('ig-embed')) { return; }
+      var s = document.createElement('script');
+      s.id = 'ig-embed'; s.async = true; s.src = 'https://www.instagram.com/embed.js';
+      document.body.appendChild(s);
+    };
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        if (entries.some(function (en) { return en.isIntersecting; })) { io.disconnect(); loadIg(); }
+      }, { rootMargin: '600px 0px' });
+      io.observe(ig);
+    } else { loadIg(); }
+  }
+
   var params = new URLSearchParams(window.location.search);
   Array.prototype.forEach.call(document.querySelectorAll('form[data-enquiry]'), function (form) {
     var status = form.querySelector('.form-status');
