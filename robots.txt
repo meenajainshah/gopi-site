@@ -1,4 +1,33 @@
+# Coach Gopi - all public pages are open to search engines and AI assistants.
+
 User-agent: *
 Allow: /
+Disallow: /design-system/
+
+# Search engines
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+User-agent: YandexBot
+Allow: /
+Disallow: /design-system/
+
+# AI search and assistants
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: meta-externalagent
+User-agent: Amazonbot
+User-agent: CCBot
+Allow: /
+Disallow: /design-system/
 
 Sitemap: https://www.coach-gopi.com/sitemap.xml
